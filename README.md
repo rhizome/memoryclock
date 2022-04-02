@@ -1,6 +1,6 @@
 # memoryclock
 
-A simple clock with extra information for the cognitively impaired and others who want to know where they are in the day at a glance. Designed to be compatible with every old tablet in existence as long as it can run JavaScript.
+A simple clock with extra information for the cognitively impaired and others who want to know where they are in the day at a glance. Designed to be compatible with every old tablet or device with a web browser as long as it can run JavaScript.
 
 Memoryclock is a single HTML file without any dependencies and does not require an internet connection. It uses the device's clock.
 
