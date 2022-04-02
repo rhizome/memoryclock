@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      body > p {
+        font-family: sans-serif;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bolder;
+        padding: 0;
+        margin: 0;
+      }
+      #day-of-week {
+        font-size: 15vh;
+      }
+      #time-of-day, #date {
+        font-size: 10vh;
+      }
+      #time {
+        font-size: 20vh;
+        text-transform: unset;
+      }
+      .suffix {
+        font-size: 8vh;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body onload="runClock()">
+    <p id="day-of-week"></p>
+    <p id="time-of-day"></p>
+    <p id="time"></p>
+    <p id="date"></p>
+    <script>
+      // config ideas:
+      // background: image(s)/slideshow
+      // colon: blinking seconds indicator toggle
+      // color schemes: black on white, white on black, custom schemes
+      // suffix: font size
+      // hours: zero-padding toggle
+      function runClock(){
+        const today = new Date();
+        document.getElementById('day-of-week').innerHTML = today.getDayName();
+        document.getElementById('time-of-day').innerHTML = getTimeOfDay(today);
+        document.getElementById('time').innerHTML = assembleTime(today);
+        document.getElementById('date').innerHTML = today.fullDate();
+        timer = setTimeout(runClock, 1000);
+      }
+      function assembleTime(today){
+        const military = false;
+        let [h,suffix] = formatHours(today, military);
+        let m = today.getMinutes();
+        m = checkTime(m); // zero-padding for single digits
+        if (military == true){
+          timeString = h.toString()+m.toString()+"<span class='suffix'>"+suffix+"</span>";
+      } else {
+        timeString = h + ":" + m + "<span class='suffix'>"+suffix+"</span>";
+      }
+      return timeString;
+    }
+    function getTimeOfDay(now){
+      const phases = [
+        [0,'night'],
+        [5,'morning'],
+        [12,'afternoon'],
+        [17,'evening'],
+        [21,'night']
+      ];
+      let hour = now.getHours();
+      for (const [index, element] of phases.entries()){
+        if (hour >= element[0] && (element[0] == phases.slice(-1)[0][0] || hour < phases[index+1][0])){
+          return element[1];
+        }
+      }
+    }
+    function formatHours(date, military){
+      let hours = date.getHours();
+      if (military == true) {
+        hour = checkTime(hours);
+        suffix = "hours";
+      } else {
+        if (hours > 12) {
+          hour = hours - 12;
+          suffix = "pm";
+        } else {
+          if (hours == 0){
+            hour = 12;
+          } else {
+            hour = hours; // no checkTime() because 01:30 doesn't look at good
+          }
+          suffix = "am";
+        }
+      }
+      // return [checkTime(hour),suffix];
+      return [hour,suffix];
+    }
+    function checkTime(i){
+      if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+      return i;
+    }
+    (function() {
+      var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      
+      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      
+      Date.prototype.getMonthName = function(){
+        return months[ this.getMonth() ];
+      };
+      Date.prototype.getDayName = function(){
+        return days[ this.getDay() ];
+      };
+      Date.prototype.fullDate = function(){
+        m = this.getMonthName()
+        d = this.getDate();
+        y = this.getFullYear();
+        return m + " " + d + ", " + y;
+      };
+    })();
+  </script>
+  </body>
+</html>
