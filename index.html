@@ -3,7 +3,14 @@
   <head>
     <meta charset="utf-8">
     <style>
-      body > p {
+      html, body, table {
+        height: 100%;
+      }
+      table {
+        width: 100%;
+      }
+      td {
+        width: 100%;
         font-family: sans-serif;
         text-align: center;
         text-transform: uppercase;
@@ -28,12 +35,12 @@
     </style>
   </head>
   <body onload="runClock()">
-    <div id="container">
-      <p id="day-of-week"></p>
-      <p id="time-of-day"></p>
-      <p id="time"></p>
-      <p id="date"></p>
-    </div>
+    <table id="container">
+      <tr><td id="day-of-week"></td></tr>
+      <tr><td id="time-of-day"></td></tr>
+      <tr><td id="time"></td></tr>
+      <tr><td id="date"></td></tr>
+    </table>
   <script>
     function runClock(){
       const today = new Date();
