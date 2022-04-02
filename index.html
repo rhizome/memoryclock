@@ -28,32 +28,28 @@
     </style>
   </head>
   <body onload="runClock()">
-    <p id="day-of-week"></p>
-    <p id="time-of-day"></p>
-    <p id="time"></p>
-    <p id="date"></p>
-    <script>
-      // config ideas:
-      // background: image(s)/slideshow
-      // colon: blinking seconds indicator toggle
-      // color schemes: black on white, white on black, custom schemes
-      // suffix: font size
-      // hours: zero-padding toggle
-      function runClock(){
-        const today = new Date();
-        document.getElementById('day-of-week').innerHTML = today.getDayName();
-        document.getElementById('time-of-day').innerHTML = getTimeOfDay(today);
-        document.getElementById('time').innerHTML = assembleTime(today);
-        document.getElementById('date').innerHTML = today.fullDate();
-        timer = setTimeout(runClock, 1000);
-      }
-      function assembleTime(today){
-        const military = false;
-        let [h,suffix] = formatHours(today, military);
-        let m = today.getMinutes();
-        m = checkTime(m); // zero-padding for single digits
-        if (military == true){
-          timeString = h.toString()+m.toString()+"<span class='suffix'>"+suffix+"</span>";
+    <div id="container">
+      <p id="day-of-week"></p>
+      <p id="time-of-day"></p>
+      <p id="time"></p>
+      <p id="date"></p>
+    </div>
+  <script>
+    function runClock(){
+      const today = new Date();
+      document.getElementById('day-of-week').innerHTML = today.getDayName();
+      document.getElementById('time-of-day').innerHTML = getTimeOfDay(today);
+      document.getElementById('time').innerHTML = assembleTime(today);
+      document.getElementById('date').innerHTML = today.fullDate();
+      timer = setTimeout(runClock, 1000);
+    }
+    function assembleTime(today){
+      const military = false;
+      let [h,suffix] = formatHours(today, military);
+      let m = today.getMinutes();
+      m = checkTime(m); // zero-padding for single digits
+      if (military == true){
+        timeString = h.toString()+m.toString()+"<span class='suffix'>"+suffix+"</span>";
       } else {
         timeString = h + ":" + m + "<span class='suffix'>"+suffix+"</span>";
       }
